@@ -16,6 +16,11 @@ using System.Xml.Serialization;
 using System.Runtime.Serialization;
 
 [assembly: EdmSchemaAttribute()]
+#region EDM Relationship Metadata
+
+[assembly: EdmRelationshipAttribute("KitchenPlan.Model", "FK_PlannedMeals_To_PantryItems", "PantryItem", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KitchenPlan.PantryItem), "PlannedMeal", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KitchenPlan.PlannedMeal), true)]
+
+#endregion
 
 namespace KitchenPlan
 {
@@ -203,6 +208,31 @@ namespace KitchenPlan
 
         #endregion
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("KitchenPlan.Model", "FK_PlannedMeals_To_PantryItems", "PlannedMeal")]
+        public EntityCollection<PlannedMeal> PlannedMeals
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlannedMeal>("KitchenPlan.Model.FK_PlannedMeals_To_PantryItems", "PlannedMeal");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlannedMeal>("KitchenPlan.Model.FK_PlannedMeals_To_PantryItems", "PlannedMeal", value);
+                }
+            }
+        }
+
+        #endregion
     }
     
     /// <summary>
@@ -219,10 +249,14 @@ namespace KitchenPlan
         /// Create a new PlannedMeal object.
         /// </summary>
         /// <param name="plannedMealID">Initial value of the PlannedMealID property.</param>
-        public static PlannedMeal CreatePlannedMeal(global::System.Int32 plannedMealID)
+        /// <param name="date">Initial value of the Date property.</param>
+        /// <param name="pantryItemID">Initial value of the PantryItemID property.</param>
+        public static PlannedMeal CreatePlannedMeal(global::System.Int32 plannedMealID, global::System.DateTime date, global::System.Int32 pantryItemID)
         {
             PlannedMeal plannedMeal = new PlannedMeal();
             plannedMeal.PlannedMealID = plannedMealID;
+            plannedMeal.Date = date;
+            plannedMeal.PantryItemID = pantryItemID;
             return plannedMeal;
         }
 
@@ -259,9 +293,9 @@ namespace KitchenPlan
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> Date
+        public global::System.DateTime Date
         {
             get
             {
@@ -276,16 +310,16 @@ namespace KitchenPlan
                 OnDateChanged();
             }
         }
-        private Nullable<global::System.DateTime> _Date;
-        partial void OnDateChanging(Nullable<global::System.DateTime> value);
+        private global::System.DateTime _Date;
+        partial void OnDateChanging(global::System.DateTime value);
         partial void OnDateChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> PantryItemID
+        public global::System.Int32 PantryItemID
         {
             get
             {
@@ -300,12 +334,53 @@ namespace KitchenPlan
                 OnPantryItemIDChanged();
             }
         }
-        private Nullable<global::System.Int32> _PantryItemID;
-        partial void OnPantryItemIDChanging(Nullable<global::System.Int32> value);
+        private global::System.Int32 _PantryItemID;
+        partial void OnPantryItemIDChanging(global::System.Int32 value);
         partial void OnPantryItemIDChanged();
 
         #endregion
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("KitchenPlan.Model", "FK_PlannedMeals_To_PantryItems", "PantryItem")]
+        public PantryItem PantryItem
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PantryItem>("KitchenPlan.Model.FK_PlannedMeals_To_PantryItems", "PantryItem").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PantryItem>("KitchenPlan.Model.FK_PlannedMeals_To_PantryItems", "PantryItem").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PantryItem> PantryItemReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PantryItem>("KitchenPlan.Model.FK_PlannedMeals_To_PantryItems", "PantryItem");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PantryItem>("KitchenPlan.Model.FK_PlannedMeals_To_PantryItems", "PantryItem", value);
+                }
+            }
+        }
+
+        #endregion
     }
 
     #endregion

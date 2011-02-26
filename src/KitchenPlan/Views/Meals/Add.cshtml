@@ -1,0 +1,8 @@
+﻿@model int
+
+@using (Html.BeginForm("Add", "Meals"))
+{ 
+    <input name="PantryItemId" value="@Model" type="hidden" />
+    <input name="Date" type="text" />
+    <input name="Add" type="submit" />
+}

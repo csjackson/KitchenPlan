@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Objects;
 
 namespace KitchenPlan.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : DataController<PantryItem>
     {
         //
         // GET: /Home/
@@ -24,31 +25,15 @@ namespace KitchenPlan.Controllers
 
         public ActionResult List()
         {
-            List<PantryItem> list;
-
-            using (var context = new KitchenPlanEntities())
-            {
-                var os = context.CreateObjectSet<PantryItem>();
-                var query = from pi in os where pi.Description.StartsWith("R") select pi;
-                list = query.ToList();
-
-            }
-            return View(list);
+            return View(objSet.Include("PlannedMeals").ToList());
         }
     
 
         public ActionResult Alpha()
         {
-            List<PantryItem> list;
-            using (var context = new KitchenPlanEntities())
-            {
-                var os = context.CreateObjectSet<PantryItem>();
-                var query = from pi in os orderby(pi.Description) select pi;
-                list = query.ToList();
-            }
-            return View(list);
+            return View(objSet.OrderBy(pi => pi.Description).ToList());
         }
-        public ActionResult Scramble()
+     /*   public ActionResult Scramble()
       {
             List<PantryItem> list;
             using (var context = new KitchenPlanEntities())
@@ -58,7 +43,7 @@ namespace KitchenPlan.Controllers
                 list = query.ToList();
             }
       }
-        //protected override void OnActionExecuting(ActionExecutingContext filterContext)
+*/        //protected override void OnActionExecuting(ActionExecutingContext filterContext)
         //{
         //    ViewBag.Title = "Home";
         //    base.OnActionExecuting(filterContext);

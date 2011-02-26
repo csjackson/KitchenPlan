@@ -4,10 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="KitchenPlan.Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="KitchenPlan.Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="KitchenPlanModelStoreContainer">
           <EntitySet Name="PantryItems" EntityType="KitchenPlan.Model.Store.PantryItems" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PlannedMeals" EntityType="KitchenPlan.Model.Store.PlannedMeals" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_PlannedMeals_To_PantryItems" Association="KitchenPlan.Model.Store.FK_PlannedMeals_To_PantryItems">
+            <End Role="PantryItems" EntitySet="PantryItems" />
+            <End Role="PlannedMeals" EntitySet="PlannedMeals" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PantryItems">
           <Key>
@@ -20,49 +24,86 @@
           <Key>
             <PropertyRef Name="PlannedMealID" />
           </Key>
-          <Property Name="PlannedMealID" Type="int" Nullable="false" />
-          <Property Name="Date" Type="date" />
-          <Property Name="PantryItemID" Type="int" />
+          <Property Name="PlannedMealID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="PantryItemID" Type="int" Nullable="false" />
         </EntityType>
-      </Schema>
-    </edmx:StorageModels>
+        <Association Name="FK_PlannedMeals_To_PantryItems">
+          <End Role="PantryItems" Type="KitchenPlan.Model.Store.PantryItems" Multiplicity="1" />
+          <End Role="PlannedMeals" Type="KitchenPlan.Model.Store.PlannedMeals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PantryItems">
+              <PropertyRef Name="PantryItemId" />
+            </Principal>
+            <Dependent Role="PlannedMeals">
+              <PropertyRef Name="PantryItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KitchenPlan.Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="KitchenPlanEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="PantryItems" EntityType="KitchenPlan.Model.PantryItem" />
           <EntitySet Name="PlannedMeals" EntityType="KitchenPlan.Model.PlannedMeal" />
+          <AssociationSet Name="FK_PlannedMeals_To_PantryItems" Association="KitchenPlan.Model.FK_PlannedMeals_To_PantryItems">
+            <End Role="PantryItem" EntitySet="PantryItems" />
+            <End Role="PlannedMeal" EntitySet="PlannedMeals" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PantryItem">
           <Key>
             <PropertyRef Name="PantryItemId" />
           </Key>
-          <Property Name="PantryItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Type="Int32" Name="PantryItemId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PlannedMeals" Relationship="KitchenPlan.Model.FK_PlannedMeals_To_PantryItems" FromRole="PantryItem" ToRole="PlannedMeal" />
         </EntityType>
         <EntityType Name="PlannedMeal">
           <Key>
             <PropertyRef Name="PlannedMealID" />
           </Key>
-          <Property Name="PlannedMealID" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="DateTime" />
-          <Property Name="PantryItemID" Type="Int32" />
+          <Property Type="Int32" Name="PlannedMealID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <Property Type="Int32" Name="PantryItemID" Nullable="false" />
+          <NavigationProperty Name="PantryItem" Relationship="KitchenPlan.Model.FK_PlannedMeals_To_PantryItems" FromRole="PlannedMeal" ToRole="PantryItem" />
         </EntityType>
+        <Association Name="FK_PlannedMeals_To_PantryItems">
+          <End Type="KitchenPlan.Model.PantryItem" Role="PantryItem" Multiplicity="1" />
+          <End Type="KitchenPlan.Model.PlannedMeal" Role="PlannedMeal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PantryItem">
+              <PropertyRef Name="PantryItemId" />
+            </Principal>
+            <Dependent Role="PlannedMeal">
+              <PropertyRef Name="PantryItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="KitchenPlanModelStoreContainer" CdmEntityContainer="KitchenPlanEntities">
-          <EntitySetMapping Name="PantryItems"><EntityTypeMapping TypeName="KitchenPlan.Model.PantryItem"><MappingFragment StoreEntitySet="PantryItems">
-            <ScalarProperty Name="PantryItemId" ColumnName="PantryItemId" />
-            <ScalarProperty Name="Description" ColumnName="Description" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="PlannedMeals"><EntityTypeMapping TypeName="KitchenPlan.Model.PlannedMeal"><MappingFragment StoreEntitySet="PlannedMeals">
-            <ScalarProperty Name="PlannedMealID" ColumnName="PlannedMealID" />
-            <ScalarProperty Name="Date" ColumnName="Date" />
-            <ScalarProperty Name="PantryItemID" ColumnName="PantryItemID" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="PantryItems">
+            <EntityTypeMapping TypeName="KitchenPlan.Model.PantryItem">
+              <MappingFragment StoreEntitySet="PantryItems">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PantryItemId" ColumnName="PantryItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlannedMeals">
+            <EntityTypeMapping TypeName="KitchenPlan.Model.PlannedMeal">
+              <MappingFragment StoreEntitySet="PlannedMeals">
+                <ScalarProperty Name="PantryItemID" ColumnName="PantryItemID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="PlannedMealID" ColumnName="PlannedMealID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -84,8 +125,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="Domain">
-        <EntityTypeShape EntityType="KitchenPlan.Model.PantryItem" Width="1.5" PointX="0.75" PointY="0.75" Height="1.4033821614583331" IsExpanded="true" />
-        <EntityTypeShape EntityType="KitchenPlan.Model.PlannedMeal" Width="1.5" PointX="2.75" PointY="0.75" Height="1.5956835937499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="KitchenPlan.Model.PantryItem" Width="1.5" PointX="0.75" PointY="1" Height="1.5956835937499998" />
+        <EntityTypeShape EntityType="KitchenPlan.Model.PlannedMeal" Width="1.5" PointX="3" PointY="0.875" Height="1.7879850260416657" />
+        <AssociationConnector Association="KitchenPlan.Model.FK_PlannedMeals_To_PantryItems" >
+          <ConnectorPoint PointX="2.25" PointY="1.7978417968749998" />
+          <ConnectorPoint PointX="3" PointY="1.7978417968749998" />
+        </AssociationConnector>
       </Diagram>
     </Diagrams>
   </Designer>

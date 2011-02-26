@@ -18,6 +18,10 @@
         <tr>
             <td>@item.PantryItemId</td>
             <td>@item.Description</td>
+            <td>@item.PlannedMeals.Count</td>
+            <td>@Html.Partial("~/Views/Meals/Add.cshtml", item.PantryItemId )</td>
+            <td>@Html.ActionLink("Plan A Meal", "Add", "Meals", 
+            new {id = item.PantryItemId}, new {})</td>
         </tr>
     }
     </table>

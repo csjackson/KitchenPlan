@@ -78,11 +78,15 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-Truncate Table PantryItems
+IF ((SELECT 1 FROM PantryItems WHERE [Description] = 'Rigatonni') IS NULL)
 INSERT INTO PantryItems values ('Rigatonni');
+IF ((SELECT 1 FROM PantryItems WHERE [Description] = 'Lasagna') IS NULL)
 INSERT INTO PantryItems values ('Lasagna');
+IF ((SELECT 1 FROM PantryItems WHERE [Description] = 'Banana') IS NULL)
 INSERT INTO PantryItems values ('Banana');
+IF ((SELECT 1 FROM PantryItems WHERE [Description] = 'Oreos') IS NULL)
 INSERT INTO PantryItems values ('Oreos');
+IF ((SELECT 1 FROM PantryItems WHERE [Description] = 'MiszpelldWerds') IS NULL)
 INSERT INTO PantryItems values ('MiszpelldWerds');
 
 GO
