@@ -35,6 +35,7 @@ namespace KitchenPlan.Controllers
             }
             return View(list);
         }
+    
 
         public ActionResult Alpha()
         {
@@ -47,6 +48,16 @@ namespace KitchenPlan.Controllers
             }
             return View(list);
         }
+        public ActionResult Scramble()
+      {
+            List<PantryItem> list;
+            using (var context = new KitchenPlanEntities())
+            {
+                var os = context.CreateObjectSet<PantryItem>();
+                var query = from pi in os select pi;
+                list = query.ToList();
+            }
+      }
         //protected override void OnActionExecuting(ActionExecutingContext filterContext)
         //{
         //    ViewBag.Title = "Home";
