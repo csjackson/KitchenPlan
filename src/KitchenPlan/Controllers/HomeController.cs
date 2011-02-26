@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using KitchenPlan.Models;
 
 namespace KitchenPlan.Controllers
 {
@@ -25,21 +24,15 @@ namespace KitchenPlan.Controllers
 
         public ActionResult List()
         {
-            var list = new List<PantryItem>();
-            using (var conn = new System.Data.SqlClient.SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=KitchenPlan;Integrated Security=SSPI;"))
-            {
-                conn.Open();
-                var cmd = new System.Data.SqlClient.SqlCommand("select * from PantryItems", conn);
-                var rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    var row = new PantryItem();
-                    row.PantryItemId = rdr.GetInt32(0);
-                    row.Description = rdr.GetString(1);
-                    list.Add(row);
-                }
-            }
+            List<PantryItem> list;
 
+            using (var context = new KitchenPlanEntities())
+            {
+                var os = context.CreateObjectSet<PantryItem>();
+                var query = from pi in os where pi.Description.StartsWith("R") select pi;
+                list = query.ToList();
+
+            }
             return View(list);
         }
         //protected override void OnActionExecuting(ActionExecutingContext filterContext)

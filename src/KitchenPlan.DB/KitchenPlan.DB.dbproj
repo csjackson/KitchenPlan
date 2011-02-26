@@ -142,5 +142,8 @@
     <Build Include="Schema Objects\Schemas\dbo\Tables\PantryItems.table.sql">
       <SubType>Code</SubType>
     </Build>
+    <Build Include="Schema Objects\Schemas\dbo\Tables\PlannedMeals.table.sql">
+      <SubType>Code</SubType>
+    </Build>
   </ItemGroup>
 </Project>
