@@ -1,0 +1,30 @@
+﻿@model List<KitchenPlan.PantryItem>
+@{
+    ViewBag.Title = "Alpha";
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+
+<body>
+<h1>Alphabetized List of Data</h1>
+    <div>
+    <table border = 1>
+    @foreach (var item in this.Model)
+    { 
+        <tr>
+            <td>@item.PantryItemId</td>
+            <td>@item.Description</td>
+        </tr>
+    }
+    </table>
+    </div>
+</body>
+</html>
