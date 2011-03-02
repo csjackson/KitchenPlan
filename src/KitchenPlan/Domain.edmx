@@ -6,13 +6,47 @@
     <edmx:StorageModels>
     <Schema Namespace="KitchenPlan.Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="KitchenPlanModelStoreContainer">
+          <EntitySet Name="BlogPosts" EntityType="KitchenPlan.Model.Store.BlogPosts" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="BlogReplies" EntityType="KitchenPlan.Model.Store.BlogReplies" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PantryItems" EntityType="KitchenPlan.Model.Store.PantryItems" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PlannedMeals" EntityType="KitchenPlan.Model.Store.PlannedMeals" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Tags" EntityType="KitchenPlan.Model.Store.Tags" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TagsToPosts" EntityType="KitchenPlan.Model.Store.TagsToPosts" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_BlogReplies_To_BlogPosts" Association="KitchenPlan.Model.Store.FK_BlogReplies_To_BlogPosts">
+            <End Role="BlogPosts" EntitySet="BlogPosts" />
+            <End Role="BlogReplies" EntitySet="BlogReplies" />
+          </AssociationSet>
           <AssociationSet Name="FK_PlannedMeals_To_PantryItems" Association="KitchenPlan.Model.Store.FK_PlannedMeals_To_PantryItems">
             <End Role="PantryItems" EntitySet="PantryItems" />
             <End Role="PlannedMeals" EntitySet="PlannedMeals" />
           </AssociationSet>
+          <AssociationSet Name="FK_PostId" Association="KitchenPlan.Model.Store.FK_PostId">
+            <End Role="BlogPosts" EntitySet="BlogPosts" />
+            <End Role="TagsToPosts" EntitySet="TagsToPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TagsToPosts_To_Tags" Association="KitchenPlan.Model.Store.FK_TagsToPosts_To_Tags">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="TagsToPosts" EntitySet="TagsToPosts" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="BlogPosts">
+          <Key>
+            <PropertyRef Name="BlogPostId" />
+          </Key>
+          <Property Name="BlogPostId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PostTitle" Type="varchar(max)" />
+          <Property Name="PostDate" Type="date" Nullable="false" />
+          <Property Name="PostText" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="BlogReplies">
+          <Key>
+            <PropertyRef Name="BlogReplyId" />
+          </Key>
+          <Property Name="BlogReplyId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BlogPostId" Type="int" Nullable="false" />
+          <Property Name="ReplyBy" Type="varchar(max)" Nullable="false" />
+          <Property Name="BlogReplyText" Type="varchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="PantryItems">
           <Key>
             <PropertyRef Name="PantryItemId" />
@@ -28,6 +62,33 @@
           <Property Name="Date" Type="date" Nullable="false" />
           <Property Name="PantryItemID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Tags">
+          <Key>
+            <PropertyRef Name="TagId" />
+          </Key>
+          <Property Name="TagId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TagName" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TagsToPosts">
+          <Key>
+            <PropertyRef Name="TagToPostId" />
+          </Key>
+          <Property Name="TagToPostId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TagId" Type="int" Nullable="false" />
+          <Property Name="BlogPostId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_BlogReplies_To_BlogPosts">
+          <End Role="BlogPosts" Type="KitchenPlan.Model.Store.BlogPosts" Multiplicity="1" />
+          <End Role="BlogReplies" Type="KitchenPlan.Model.Store.BlogReplies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlogPosts">
+              <PropertyRef Name="BlogPostId" />
+            </Principal>
+            <Dependent Role="BlogReplies">
+              <PropertyRef Name="BlogPostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PlannedMeals_To_PantryItems">
           <End Role="PantryItems" Type="KitchenPlan.Model.Store.PantryItems" Multiplicity="1" />
           <End Role="PlannedMeals" Type="KitchenPlan.Model.Store.PlannedMeals" Multiplicity="*" />
@@ -37,6 +98,30 @@
             </Principal>
             <Dependent Role="PlannedMeals">
               <PropertyRef Name="PantryItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostId">
+          <End Role="BlogPosts" Type="KitchenPlan.Model.Store.BlogPosts" Multiplicity="1" />
+          <End Role="TagsToPosts" Type="KitchenPlan.Model.Store.TagsToPosts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlogPosts">
+              <PropertyRef Name="BlogPostId" />
+            </Principal>
+            <Dependent Role="TagsToPosts">
+              <PropertyRef Name="BlogPostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TagsToPosts_To_Tags">
+          <End Role="Tags" Type="KitchenPlan.Model.Store.Tags" Multiplicity="1" />
+          <End Role="TagsToPosts" Type="KitchenPlan.Model.Store.TagsToPosts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="TagId" />
+            </Principal>
+            <Dependent Role="TagsToPosts">
+              <PropertyRef Name="TagId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -50,6 +135,22 @@
           <AssociationSet Name="FK_PlannedMeals_To_PantryItems" Association="KitchenPlan.Model.FK_PlannedMeals_To_PantryItems">
             <End Role="PantryItem" EntitySet="PantryItems" />
             <End Role="PlannedMeal" EntitySet="PlannedMeals" />
+          </AssociationSet>
+          <EntitySet Name="BlogPosts" EntityType="KitchenPlan.Model.BlogPost" />
+          <EntitySet Name="BlogReplies" EntityType="KitchenPlan.Model.BlogReply" />
+          <AssociationSet Name="FK_BlogReplies_To_BlogPosts" Association="KitchenPlan.Model.FK_BlogReplies_To_BlogPosts">
+            <End Role="BlogPost" EntitySet="BlogPosts" />
+            <End Role="BlogReply" EntitySet="BlogReplies" />
+          </AssociationSet>
+          <EntitySet Name="Tags" EntityType="KitchenPlan.Model.Tag" />
+          <EntitySet Name="TagsToPosts" EntityType="KitchenPlan.Model.TagsToPost" />
+          <AssociationSet Name="FK_PostId" Association="KitchenPlan.Model.FK_PostId">
+            <End Role="BlogPost" EntitySet="BlogPosts" />
+            <End Role="TagsToPost" EntitySet="TagsToPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TagsToPosts_To_Tags" Association="KitchenPlan.Model.FK_TagsToPosts_To_Tags">
+            <End Role="Tag" EntitySet="Tags" />
+            <End Role="TagsToPost" EntitySet="TagsToPosts" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="PantryItem">
@@ -81,6 +182,81 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="BlogPost">
+          <Key>
+            <PropertyRef Name="BlogPostId" />
+          </Key>
+          <Property Type="Int32" Name="BlogPostId" Nullable="false" />
+          <Property Type="String" Name="PostTitle" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="PostDate" Nullable="false" />
+          <Property Type="String" Name="PostText" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BlogReplies" Relationship="KitchenPlan.Model.FK_BlogReplies_To_BlogPosts" FromRole="BlogPost" ToRole="BlogReply" />
+          <NavigationProperty Name="TagsToPosts" Relationship="KitchenPlan.Model.FK_PostId" FromRole="BlogPost" ToRole="TagsToPost" />
+        </EntityType>
+        <EntityType Name="BlogReply">
+          <Key>
+            <PropertyRef Name="BlogReplyId" />
+          </Key>
+          <Property Type="Int32" Name="BlogReplyId" Nullable="false" />
+          <Property Type="Int32" Name="BlogPostId" Nullable="false" />
+          <Property Type="String" Name="ReplyBy" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BlogReplyText" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BlogPost" Relationship="KitchenPlan.Model.FK_BlogReplies_To_BlogPosts" FromRole="BlogReply" ToRole="BlogPost" />
+        </EntityType>
+        <Association Name="FK_BlogReplies_To_BlogPosts">
+          <End Type="KitchenPlan.Model.BlogPost" Role="BlogPost" Multiplicity="1" />
+          <End Type="KitchenPlan.Model.BlogReply" Role="BlogReply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlogPost">
+              <PropertyRef Name="BlogPostId" />
+            </Principal>
+            <Dependent Role="BlogReply">
+              <PropertyRef Name="BlogPostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="TagId" />
+          </Key>
+          <Property Type="Int32" Name="TagId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="TagName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TagsToPosts" Relationship="KitchenPlan.Model.FK_TagsToPosts_To_Tags" FromRole="Tag" ToRole="TagsToPost" />
+        </EntityType>
+        <EntityType Name="TagsToPost">
+          <Key>
+            <PropertyRef Name="TagToPostId" />
+          </Key>
+          <Property Type="Int32" Name="TagToPostId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="TagId" Nullable="false" />
+          <Property Type="Int32" Name="BlogPostId" Nullable="false" />
+          <NavigationProperty Name="BlogPost" Relationship="KitchenPlan.Model.FK_PostId" FromRole="TagsToPost" ToRole="BlogPost" />
+          <NavigationProperty Name="Tag" Relationship="KitchenPlan.Model.FK_TagsToPosts_To_Tags" FromRole="TagsToPost" ToRole="Tag" />
+        </EntityType>
+        <Association Name="FK_PostId">
+          <End Type="KitchenPlan.Model.BlogPost" Role="BlogPost" Multiplicity="1" />
+          <End Type="KitchenPlan.Model.TagsToPost" Role="TagsToPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlogPost">
+              <PropertyRef Name="BlogPostId" />
+            </Principal>
+            <Dependent Role="TagsToPost">
+              <PropertyRef Name="BlogPostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TagsToPosts_To_Tags">
+          <End Type="KitchenPlan.Model.Tag" Role="Tag" Multiplicity="1" />
+          <End Type="KitchenPlan.Model.TagsToPost" Role="TagsToPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="TagId" />
+            </Principal>
+            <Dependent Role="TagsToPost">
+              <PropertyRef Name="TagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -101,6 +277,43 @@
                 <ScalarProperty Name="PantryItemID" ColumnName="PantryItemID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="PlannedMealID" ColumnName="PlannedMealID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlogPosts">
+            <EntityTypeMapping TypeName="KitchenPlan.Model.BlogPost">
+              <MappingFragment StoreEntitySet="BlogPosts">
+                <ScalarProperty Name="PostText" ColumnName="PostText" />
+                <ScalarProperty Name="PostDate" ColumnName="PostDate" />
+                <ScalarProperty Name="PostTitle" ColumnName="PostTitle" />
+                <ScalarProperty Name="BlogPostId" ColumnName="BlogPostId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlogReplies">
+            <EntityTypeMapping TypeName="KitchenPlan.Model.BlogReply">
+              <MappingFragment StoreEntitySet="BlogReplies">
+                <ScalarProperty Name="BlogReplyText" ColumnName="BlogReplyText" />
+                <ScalarProperty Name="ReplyBy" ColumnName="ReplyBy" />
+                <ScalarProperty Name="BlogPostId" ColumnName="BlogPostId" />
+                <ScalarProperty Name="BlogReplyId" ColumnName="BlogReplyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="KitchenPlan.Model.Tag">
+              <MappingFragment StoreEntitySet="Tags">
+                <ScalarProperty Name="TagName" ColumnName="TagName" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TagsToPosts">
+            <EntityTypeMapping TypeName="KitchenPlan.Model.TagsToPost">
+              <MappingFragment StoreEntitySet="TagsToPosts">
+                <ScalarProperty Name="BlogPostId" ColumnName="BlogPostId" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+                <ScalarProperty Name="TagToPostId" ColumnName="TagToPostId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -125,11 +338,27 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="Domain">
-        <EntityTypeShape EntityType="KitchenPlan.Model.PantryItem" Width="1.5" PointX="0.75" PointY="1" Height="1.5956835937499998" />
-        <EntityTypeShape EntityType="KitchenPlan.Model.PlannedMeal" Width="1.5" PointX="3" PointY="0.875" Height="1.7879850260416657" />
+        <EntityTypeShape EntityType="KitchenPlan.Model.PantryItem" Width="1.5" PointX="0.5" PointY="0.5" Height="1.5956835937499998" />
+        <EntityTypeShape EntityType="KitchenPlan.Model.PlannedMeal" Width="1.5" PointX="0.5" PointY="2.5" Height="1.7879850260416657" />
         <AssociationConnector Association="KitchenPlan.Model.FK_PlannedMeals_To_PantryItems" >
-          <ConnectorPoint PointX="2.25" PointY="1.7978417968749998" />
-          <ConnectorPoint PointX="3" PointY="1.7978417968749998" />
+          <ConnectorPoint PointX="1.25" PointY="2.09568359375" />
+          <ConnectorPoint PointX="1.25" PointY="2.5" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="KitchenPlan.Model.BlogPost" Width="1.5" PointX="2.25" PointY="0.5" Height="2.172587890625" />
+        <EntityTypeShape EntityType="KitchenPlan.Model.BlogReply" Width="1.5" PointX="4.25" PointY="0.5" Height="1.9802864583333335" />
+        <AssociationConnector Association="KitchenPlan.Model.FK_BlogReplies_To_BlogPosts" >
+          <ConnectorPoint PointX="3.75" PointY="1.4901432291666668" />
+          <ConnectorPoint PointX="4.25" PointY="1.4901432291666668" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="KitchenPlan.Model.Tag" Width="1.5" PointX="4.375" PointY="3.375" Height="1.4033821614583317" />
+        <EntityTypeShape EntityType="KitchenPlan.Model.TagsToPost" Width="1.5" PointX="2.25" PointY="3.375" Height="1.5956835937499996" />
+        <AssociationConnector Association="KitchenPlan.Model.FK_PostId" >
+          <ConnectorPoint PointX="3" PointY="2.672587890625" />
+          <ConnectorPoint PointX="3" PointY="3.375" />
+        </AssociationConnector>
+        <AssociationConnector Association="KitchenPlan.Model.FK_TagsToPosts_To_Tags" >
+          <ConnectorPoint PointX="4.375" PointY="4.172841796875" />
+          <ConnectorPoint PointX="3.75" PointY="4.172841796875" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

@@ -27,7 +27,7 @@ namespace KitchenPlan.Controllers
         {
             return View(objSet.Include("PlannedMeals").ToList());
         }
-    
+     
 
         public ActionResult Alpha()
         {

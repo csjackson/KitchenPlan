@@ -19,6 +19,9 @@ using System.Runtime.Serialization;
 #region EDM Relationship Metadata
 
 [assembly: EdmRelationshipAttribute("KitchenPlan.Model", "FK_PlannedMeals_To_PantryItems", "PantryItem", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KitchenPlan.PantryItem), "PlannedMeal", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KitchenPlan.PlannedMeal), true)]
+[assembly: EdmRelationshipAttribute("KitchenPlan.Model", "FK_BlogReplies_To_BlogPosts", "BlogPost", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KitchenPlan.BlogPost), "BlogReply", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KitchenPlan.BlogReply), true)]
+[assembly: EdmRelationshipAttribute("KitchenPlan.Model", "FK_PostId", "BlogPost", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KitchenPlan.BlogPost), "TagsToPost", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KitchenPlan.TagsToPost), true)]
+[assembly: EdmRelationshipAttribute("KitchenPlan.Model", "FK_TagsToPosts_To_Tags", "Tag", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KitchenPlan.Tag), "TagsToPost", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KitchenPlan.TagsToPost), true)]
 
 #endregion
 
@@ -101,6 +104,70 @@ namespace KitchenPlan
             }
         }
         private ObjectSet<PlannedMeal> _PlannedMeals;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BlogPost> BlogPosts
+        {
+            get
+            {
+                if ((_BlogPosts == null))
+                {
+                    _BlogPosts = base.CreateObjectSet<BlogPost>("BlogPosts");
+                }
+                return _BlogPosts;
+            }
+        }
+        private ObjectSet<BlogPost> _BlogPosts;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BlogReply> BlogReplies
+        {
+            get
+            {
+                if ((_BlogReplies == null))
+                {
+                    _BlogReplies = base.CreateObjectSet<BlogReply>("BlogReplies");
+                }
+                return _BlogReplies;
+            }
+        }
+        private ObjectSet<BlogReply> _BlogReplies;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Tag> Tags
+        {
+            get
+            {
+                if ((_Tags == null))
+                {
+                    _Tags = base.CreateObjectSet<Tag>("Tags");
+                }
+                return _Tags;
+            }
+        }
+        private ObjectSet<Tag> _Tags;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<TagsToPost> TagsToPosts
+        {
+            get
+            {
+                if ((_TagsToPosts == null))
+                {
+                    _TagsToPosts = base.CreateObjectSet<TagsToPost>("TagsToPosts");
+                }
+                return _TagsToPosts;
+            }
+        }
+        private ObjectSet<TagsToPost> _TagsToPosts;
 
         #endregion
         #region AddTo Methods
@@ -120,6 +187,38 @@ namespace KitchenPlan
         {
             base.AddObject("PlannedMeals", plannedMeal);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BlogPosts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBlogPosts(BlogPost blogPost)
+        {
+            base.AddObject("BlogPosts", blogPost);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BlogReplies EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBlogReplies(BlogReply blogReply)
+        {
+            base.AddObject("BlogReplies", blogReply);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Tags EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToTags(Tag tag)
+        {
+            base.AddObject("Tags", tag);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the TagsToPosts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToTagsToPosts(TagsToPost tagsToPost)
+        {
+            base.AddObject("TagsToPosts", tagsToPost);
+        }
 
         #endregion
     }
@@ -128,6 +227,356 @@ namespace KitchenPlan
     #endregion
     
     #region Entities
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="KitchenPlan.Model", Name="BlogPost")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class BlogPost : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new BlogPost object.
+        /// </summary>
+        /// <param name="blogPostId">Initial value of the BlogPostId property.</param>
+        /// <param name="postDate">Initial value of the PostDate property.</param>
+        public static BlogPost CreateBlogPost(global::System.Int32 blogPostId, global::System.DateTime postDate)
+        {
+            BlogPost blogPost = new BlogPost();
+            blogPost.BlogPostId = blogPostId;
+            blogPost.PostDate = postDate;
+            return blogPost;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BlogPostId
+        {
+            get
+            {
+                return _BlogPostId;
+            }
+            set
+            {
+                if (_BlogPostId != value)
+                {
+                    OnBlogPostIdChanging(value);
+                    ReportPropertyChanging("BlogPostId");
+                    _BlogPostId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("BlogPostId");
+                    OnBlogPostIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _BlogPostId;
+        partial void OnBlogPostIdChanging(global::System.Int32 value);
+        partial void OnBlogPostIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PostTitle
+        {
+            get
+            {
+                return _PostTitle;
+            }
+            set
+            {
+                OnPostTitleChanging(value);
+                ReportPropertyChanging("PostTitle");
+                _PostTitle = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PostTitle");
+                OnPostTitleChanged();
+            }
+        }
+        private global::System.String _PostTitle;
+        partial void OnPostTitleChanging(global::System.String value);
+        partial void OnPostTitleChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime PostDate
+        {
+            get
+            {
+                return _PostDate;
+            }
+            set
+            {
+                OnPostDateChanging(value);
+                ReportPropertyChanging("PostDate");
+                _PostDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PostDate");
+                OnPostDateChanged();
+            }
+        }
+        private global::System.DateTime _PostDate;
+        partial void OnPostDateChanging(global::System.DateTime value);
+        partial void OnPostDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PostText
+        {
+            get
+            {
+                return _PostText;
+            }
+            set
+            {
+                OnPostTextChanging(value);
+                ReportPropertyChanging("PostText");
+                _PostText = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PostText");
+                OnPostTextChanged();
+            }
+        }
+        private global::System.String _PostText;
+        partial void OnPostTextChanging(global::System.String value);
+        partial void OnPostTextChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("KitchenPlan.Model", "FK_BlogReplies_To_BlogPosts", "BlogReply")]
+        public EntityCollection<BlogReply> BlogReplies
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<BlogReply>("KitchenPlan.Model.FK_BlogReplies_To_BlogPosts", "BlogReply");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<BlogReply>("KitchenPlan.Model.FK_BlogReplies_To_BlogPosts", "BlogReply", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("KitchenPlan.Model", "FK_PostId", "TagsToPost")]
+        public EntityCollection<TagsToPost> TagsToPosts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TagsToPost>("KitchenPlan.Model.FK_PostId", "TagsToPost");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TagsToPost>("KitchenPlan.Model.FK_PostId", "TagsToPost", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="KitchenPlan.Model", Name="BlogReply")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class BlogReply : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new BlogReply object.
+        /// </summary>
+        /// <param name="blogReplyId">Initial value of the BlogReplyId property.</param>
+        /// <param name="blogPostId">Initial value of the BlogPostId property.</param>
+        /// <param name="replyBy">Initial value of the ReplyBy property.</param>
+        /// <param name="blogReplyText">Initial value of the BlogReplyText property.</param>
+        public static BlogReply CreateBlogReply(global::System.Int32 blogReplyId, global::System.Int32 blogPostId, global::System.String replyBy, global::System.String blogReplyText)
+        {
+            BlogReply blogReply = new BlogReply();
+            blogReply.BlogReplyId = blogReplyId;
+            blogReply.BlogPostId = blogPostId;
+            blogReply.ReplyBy = replyBy;
+            blogReply.BlogReplyText = blogReplyText;
+            return blogReply;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BlogReplyId
+        {
+            get
+            {
+                return _BlogReplyId;
+            }
+            set
+            {
+                if (_BlogReplyId != value)
+                {
+                    OnBlogReplyIdChanging(value);
+                    ReportPropertyChanging("BlogReplyId");
+                    _BlogReplyId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("BlogReplyId");
+                    OnBlogReplyIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _BlogReplyId;
+        partial void OnBlogReplyIdChanging(global::System.Int32 value);
+        partial void OnBlogReplyIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BlogPostId
+        {
+            get
+            {
+                return _BlogPostId;
+            }
+            set
+            {
+                OnBlogPostIdChanging(value);
+                ReportPropertyChanging("BlogPostId");
+                _BlogPostId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("BlogPostId");
+                OnBlogPostIdChanged();
+            }
+        }
+        private global::System.Int32 _BlogPostId;
+        partial void OnBlogPostIdChanging(global::System.Int32 value);
+        partial void OnBlogPostIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ReplyBy
+        {
+            get
+            {
+                return _ReplyBy;
+            }
+            set
+            {
+                OnReplyByChanging(value);
+                ReportPropertyChanging("ReplyBy");
+                _ReplyBy = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ReplyBy");
+                OnReplyByChanged();
+            }
+        }
+        private global::System.String _ReplyBy;
+        partial void OnReplyByChanging(global::System.String value);
+        partial void OnReplyByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String BlogReplyText
+        {
+            get
+            {
+                return _BlogReplyText;
+            }
+            set
+            {
+                OnBlogReplyTextChanging(value);
+                ReportPropertyChanging("BlogReplyText");
+                _BlogReplyText = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("BlogReplyText");
+                OnBlogReplyTextChanged();
+            }
+        }
+        private global::System.String _BlogReplyText;
+        partial void OnBlogReplyTextChanging(global::System.String value);
+        partial void OnBlogReplyTextChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("KitchenPlan.Model", "FK_BlogReplies_To_BlogPosts", "BlogPost")]
+        public BlogPost BlogPost
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<BlogPost>("KitchenPlan.Model.FK_BlogReplies_To_BlogPosts", "BlogPost").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<BlogPost>("KitchenPlan.Model.FK_BlogReplies_To_BlogPosts", "BlogPost").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<BlogPost> BlogPostReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<BlogPost>("KitchenPlan.Model.FK_BlogReplies_To_BlogPosts", "BlogPost");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<BlogPost>("KitchenPlan.Model.FK_BlogReplies_To_BlogPosts", "BlogPost", value);
+                }
+            }
+        }
+
+        #endregion
+    }
     
     /// <summary>
     /// No Metadata Documentation available.
@@ -376,6 +825,298 @@ namespace KitchenPlan
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PantryItem>("KitchenPlan.Model.FK_PlannedMeals_To_PantryItems", "PantryItem", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="KitchenPlan.Model", Name="Tag")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Tag : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Tag object.
+        /// </summary>
+        /// <param name="tagId">Initial value of the TagId property.</param>
+        /// <param name="tagName">Initial value of the TagName property.</param>
+        public static Tag CreateTag(global::System.Int32 tagId, global::System.String tagName)
+        {
+            Tag tag = new Tag();
+            tag.TagId = tagId;
+            tag.TagName = tagName;
+            return tag;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 TagId
+        {
+            get
+            {
+                return _TagId;
+            }
+            set
+            {
+                if (_TagId != value)
+                {
+                    OnTagIdChanging(value);
+                    ReportPropertyChanging("TagId");
+                    _TagId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("TagId");
+                    OnTagIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _TagId;
+        partial void OnTagIdChanging(global::System.Int32 value);
+        partial void OnTagIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String TagName
+        {
+            get
+            {
+                return _TagName;
+            }
+            set
+            {
+                OnTagNameChanging(value);
+                ReportPropertyChanging("TagName");
+                _TagName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("TagName");
+                OnTagNameChanged();
+            }
+        }
+        private global::System.String _TagName;
+        partial void OnTagNameChanging(global::System.String value);
+        partial void OnTagNameChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("KitchenPlan.Model", "FK_TagsToPosts_To_Tags", "TagsToPost")]
+        public EntityCollection<TagsToPost> TagsToPosts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TagsToPost>("KitchenPlan.Model.FK_TagsToPosts_To_Tags", "TagsToPost");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TagsToPost>("KitchenPlan.Model.FK_TagsToPosts_To_Tags", "TagsToPost", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="KitchenPlan.Model", Name="TagsToPost")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class TagsToPost : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new TagsToPost object.
+        /// </summary>
+        /// <param name="tagToPostId">Initial value of the TagToPostId property.</param>
+        /// <param name="tagId">Initial value of the TagId property.</param>
+        /// <param name="blogPostId">Initial value of the BlogPostId property.</param>
+        public static TagsToPost CreateTagsToPost(global::System.Int32 tagToPostId, global::System.Int32 tagId, global::System.Int32 blogPostId)
+        {
+            TagsToPost tagsToPost = new TagsToPost();
+            tagsToPost.TagToPostId = tagToPostId;
+            tagsToPost.TagId = tagId;
+            tagsToPost.BlogPostId = blogPostId;
+            return tagsToPost;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 TagToPostId
+        {
+            get
+            {
+                return _TagToPostId;
+            }
+            set
+            {
+                if (_TagToPostId != value)
+                {
+                    OnTagToPostIdChanging(value);
+                    ReportPropertyChanging("TagToPostId");
+                    _TagToPostId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("TagToPostId");
+                    OnTagToPostIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _TagToPostId;
+        partial void OnTagToPostIdChanging(global::System.Int32 value);
+        partial void OnTagToPostIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 TagId
+        {
+            get
+            {
+                return _TagId;
+            }
+            set
+            {
+                OnTagIdChanging(value);
+                ReportPropertyChanging("TagId");
+                _TagId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TagId");
+                OnTagIdChanged();
+            }
+        }
+        private global::System.Int32 _TagId;
+        partial void OnTagIdChanging(global::System.Int32 value);
+        partial void OnTagIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BlogPostId
+        {
+            get
+            {
+                return _BlogPostId;
+            }
+            set
+            {
+                OnBlogPostIdChanging(value);
+                ReportPropertyChanging("BlogPostId");
+                _BlogPostId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("BlogPostId");
+                OnBlogPostIdChanged();
+            }
+        }
+        private global::System.Int32 _BlogPostId;
+        partial void OnBlogPostIdChanging(global::System.Int32 value);
+        partial void OnBlogPostIdChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("KitchenPlan.Model", "FK_PostId", "BlogPost")]
+        public BlogPost BlogPost
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<BlogPost>("KitchenPlan.Model.FK_PostId", "BlogPost").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<BlogPost>("KitchenPlan.Model.FK_PostId", "BlogPost").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<BlogPost> BlogPostReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<BlogPost>("KitchenPlan.Model.FK_PostId", "BlogPost");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<BlogPost>("KitchenPlan.Model.FK_PostId", "BlogPost", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("KitchenPlan.Model", "FK_TagsToPosts_To_Tags", "Tag")]
+        public Tag Tag
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Tag>("KitchenPlan.Model.FK_TagsToPosts_To_Tags", "Tag").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Tag>("KitchenPlan.Model.FK_TagsToPosts_To_Tags", "Tag").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Tag> TagReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Tag>("KitchenPlan.Model.FK_TagsToPosts_To_Tags", "Tag");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Tag>("KitchenPlan.Model.FK_TagsToPosts_To_Tags", "Tag", value);
                 }
             }
         }

@@ -67,6 +67,24 @@ GO
 */
 
 GO
+PRINT N'Creating FK_PostId...';
+
+
+GO
+ALTER TABLE [dbo].[TagsToPosts] WITH NOCHECK
+    ADD CONSTRAINT [FK_PostId] FOREIGN KEY ([BlogPostId]) REFERENCES [dbo].[BlogPosts] ([BlogPostId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
+PRINT N'Creating FK_TagsToPosts_To_Tags...';
+
+
+GO
+ALTER TABLE [dbo].[TagsToPosts] WITH NOCHECK
+    ADD CONSTRAINT [FK_TagsToPosts_To_Tags] FOREIGN KEY ([TagId]) REFERENCES [dbo].[Tags] ([TagId]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+GO
 /*
 Post-Deployment Script Template							
 --------------------------------------------------------------------------------------
@@ -88,5 +106,19 @@ IF ((SELECT 1 FROM PantryItems WHERE [Description] = 'Oreos') IS NULL)
 INSERT INTO PantryItems values ('Oreos');
 IF ((SELECT 1 FROM PantryItems WHERE [Description] = 'MiszpelldWerds') IS NULL)
 INSERT INTO PantryItems values ('MiszpelldWerds');
+
+GO
+PRINT N'Checking existing data against newly created constraints';
+
+
+GO
+USE [$(DatabaseName)];
+
+
+GO
+ALTER TABLE [dbo].[TagsToPosts] WITH CHECK CHECK CONSTRAINT [FK_PostId];
+
+ALTER TABLE [dbo].[TagsToPosts] WITH CHECK CHECK CONSTRAINT [FK_TagsToPosts_To_Tags];
+
 
 GO
