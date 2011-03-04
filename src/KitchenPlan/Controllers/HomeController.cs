@@ -27,12 +27,13 @@ namespace KitchenPlan.Controllers
         {
             return View(objSet.Include("PlannedMeals").ToList());
         }
-     
 
         public ActionResult Alpha()
         {
-            return View(objSet.OrderBy(pi => pi.Description).ToList());
+           return View(objSet.OrderBy(pi => pi.Description).ToList());
         }
+    
+
      /*   public ActionResult Scramble()
       {
             List<PantryItem> list;

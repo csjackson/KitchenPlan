@@ -6,23 +6,19 @@ using System.Web.Mvc;
 
 namespace KitchenPlan.Controllers
 {
-    public class BlogController : DataController<BlogPost> 
+    public class BlogController : DataController<BlogPost>
     {
-        [HttpGet]
-        public ActionResult Add(int id)
-        {
-            return View(id);
-        }
-        [HttpPost]
-        public ActionResult Add(BlogPost post)
-        {
-            objSet.AddObject(post);
+        //
+        // GET: /Blog/
 
-            return RedirectToAction("List", "Blog");
-        }
-        public ActionResult List()
+        public ActionResult Index()
         {
-            return View(objSet.Include("BlogPosts").ToList());
+            return View();
         }
+        public ActionResult Post()
+        {
+            return View(objSet.ToList());
+        }
+
     }
 }

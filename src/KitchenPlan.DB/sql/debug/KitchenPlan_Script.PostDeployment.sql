@@ -19,3 +19,10 @@ IF ((SELECT 1 FROM PantryItems WHERE [Description] = 'Oreos') IS NULL)
 INSERT INTO PantryItems values ('Oreos');
 IF ((SELECT 1 FROM PantryItems WHERE [Description] = 'MiszpelldWerds') IS NULL)
 INSERT INTO PantryItems values ('MiszpelldWerds');
+
+IF ((SELECT 1 FROM BlogPosts WHERE [PostTitle] = 'Sample') IS NULL)
+INSERT INTO BlogPosts values ('Sample', '10/10/2010', 'This is some sample text.');
+IF ((SELECT 1 FROM BlogReplies WHERE [ReplyBy] = 'Tester') IS NULL)
+INSERT INTO BlogReplies values ('1', 'Tester', 'This is a sample reply');
+IF ((Select 1 from Tags where TagName = 'ExampleTag') is null)
+insert into Tags values ('ExampleTag');
