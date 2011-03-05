@@ -8,17 +8,27 @@ namespace KitchenPlan.Controllers
 {
     public class BlogController : DataController<BlogPost>
     {
-        //
-        // GET: /Blog/
-
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Posts", "Blog");
         }
-        public ActionResult Post()
+        
+        public ActionResult Posts()
         {
-            return View(objSet.ToList());
+            return View(objSet.Include("BlogReplies").ToList());
         }
 
-    }
+        [HttpGet]
+        public ActionResult NewPost(int id)
+        {
+            return View(id);
+        }
+        [HttpPost]
+        public ActionResult NewPost(BlogPost post)
+        {
+            objSet.AddObject(post);
+
+            return RedirectToAction("Posts", "Blog");
+        }
+    }    
 }

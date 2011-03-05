@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace KitchenPlan.Controllers
 {
-    public class ReplyController : DataController<BlogPost> 
+    public class ReplyController : DataController<BlogReply>
     {
         [HttpGet]
         public ActionResult Add(int id)
@@ -14,12 +14,11 @@ namespace KitchenPlan.Controllers
             return View(id);
         }
         [HttpPost]
-        public ActionResult Add(BlogPost post)
+        public ActionResult Add(BlogReply reply)
         {
-            objSet.AddObject(post);
+            objSet.AddObject(reply);
 
-            return RedirectToAction("Post", "Blog");
+            return RedirectToAction("Posts", "Blog");
         }
-    
     }
 }

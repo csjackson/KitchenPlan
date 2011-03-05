@@ -1,0 +1,52 @@
+﻿@model List<KitchenPlan.BlogPost>
+@{
+    Layout = null;
+ }
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Blog</title>
+</head>
+<body>
+<h1>Blog Posts</h1>
+    <div>
+          
+    
+    <table border = 1>
+ 
+    @{int LoopCounter = 0;}
+    @foreach (var item in this.Model)
+    { 
+        
+        <tr>
+            <td>@item.BlogPostId</td>
+            <td>@item.PostTitle</td>
+            <td>@item.PostDate</td>
+            <td>@item.PostText</td>
+            
+            @{LoopCounter++;}
+            <td>@Html.ActionLink("Click here rewrite a post", "NewPost", "Blog",
+                new { id = (item.BlogPostId)}, new { }) </td>
+                </tr>
+            <tr>
+            @{foreach (var reply in item.BlogReplies)
+                {
+                    <td>@reply.ReplyBy</td>
+                    <td>@reply.BlogReplyText</td>
+                }
+              } 
+         </tr>
+     }
+    </table>
+    @Html.ActionLink("Click here write a new post", "NewPost", "Blog",
+                new { id = ((LoopCounter)+1)}, new { }) 
+
+   
+   
+    </div>
+    <p</p>
+</body>
+</html>

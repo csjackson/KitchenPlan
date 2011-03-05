@@ -1,0 +1,16 @@
+﻿@model int
+
+    <p>
+    We shall add new posts here.
+    </p>
+    <p>Give your post a title, date, and the meat of your post. 
+
+@using (Html.BeginForm())
+{ 
+    <input name="BlogPostId" value="@Model"   type ="hidden"/>
+    <input name="PostTitle" type="text"/>
+    <input name="PostDate" type="text" />
+    <input name="PostText" type="text" />
+    <input name="Add" type="submit" />
+}
+    

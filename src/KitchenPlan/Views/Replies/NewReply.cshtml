@@ -1,0 +1,28 @@
+﻿@model List<KitchenPlan.BlogPost>
+@{
+    ViewBag.Title = "NewReply";
+}
+
+<h2>Here you can reply to your chosen post</h2>
+<p>  need to work from 2 models at once: BlogPosts, to see them, and BlogReplies,</p>
+<p>to post to the correct one.</p>
+<p></p>
+//
+// <tr>
+// <td>@this.Model.PostTitle
+// </td>
+//
+//
+// </tr>
+
+
+@using (Html.BeginForm())
+{ 
+    <input name="BlogReplyId" value="@Model"   type ="hidden"/>
+    <input name="BlogPostID" val
+    <input name="PostTitle" type="text"/>
+    <input name="PostDate" type="text" />
+    <input name="PostText" type="text" />
+    <input name="Add" type="submit" />
+}
+   
