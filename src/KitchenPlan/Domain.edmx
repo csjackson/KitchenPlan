@@ -36,7 +36,7 @@
           <Property Name="BlogPostId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="PostTitle" Type="varchar(max)" />
           <Property Name="PostDate" Type="date" Nullable="false" />
-          <Property Name="PostText" Type="varchar(max)" />
+          <Property Name="PostText" Type="text" />
         </EntityType>
         <EntityType Name="BlogReplies">
           <Key>

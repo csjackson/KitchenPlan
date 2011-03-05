@@ -17,7 +17,6 @@
     
     <table border = 1>
  
-    @{int LoopCounter = 0;}
     @foreach (var item in this.Model)
     { 
         
@@ -27,7 +26,6 @@
             <td>@item.PostDate</td>
             <td>@item.PostText</td>
             
-            @{LoopCounter++;}
             <td>@Html.ActionLink("Click here rewrite a post", "NewPost", "Blog",
                 new { id = (item.BlogPostId)}, new { }) </td>
                 </tr>
@@ -41,8 +39,7 @@
          </tr>
      }
     </table>
-    @Html.ActionLink("Click here write a new post", "NewPost", "Blog",
-                new { id = ((LoopCounter)+1)}, new { }) 
+    @Html.ActionLink("Click here write a new post", "NewPost", "Blog")
 
    
    

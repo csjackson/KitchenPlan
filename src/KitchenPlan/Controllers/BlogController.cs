@@ -19,15 +19,26 @@ namespace KitchenPlan.Controllers
         }
 
         [HttpGet]
-        public ActionResult NewPost(int id)
+        public ActionResult NewPost(int? id)
         {
-            return View(id);
+            var entry = objSet.FirstOrDefault(qq => qq.BlogPostId == id.Value);
+            if (entry == null)
+                entry = new BlogPost();
+            return View(entry);
         }
         [HttpPost]
         public ActionResult NewPost(BlogPost post)
         {
-            objSet.AddObject(post);
-
+            var entry = objSet.FirstOrDefault(qq => qq.BlogPostId == post.BlogPostId);
+            if (entry == null)
+                objSet.AddObject(post);
+            else
+            {
+                entry.BlogPostId = post.BlogPostId;
+                entry.PostDate = post.PostDate;
+                entry.PostTitle = post.PostTitle;
+                entry.PostText = post.PostText;
+            }
             return RedirectToAction("Posts", "Blog");
         }
     }    

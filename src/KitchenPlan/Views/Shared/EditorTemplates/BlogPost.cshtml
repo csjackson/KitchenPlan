@@ -1,0 +1,15 @@
+﻿@model KitchenPlan.BlogPost
+<script>
+    $(function () {
+        $("#PostDate").datepicker();
+    });
+
+</script>
+           
+    @Html.HiddenFor(p => p.BlogPostId)
+    @Html.LabelFor(p => p.PostTitle)
+    @Html.EditorFor(p => p.PostTitle)<br />
+    @Html.LabelFor(p => p.PostDate)
+    @Html.EditorFor(p => p.PostDate)<br />
+    @Html.LabelFor(p => p.PostText)
+    @Html.EditorFor(p => p.PostText)<br />
