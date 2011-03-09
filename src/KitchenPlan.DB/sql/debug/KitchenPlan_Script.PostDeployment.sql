@@ -24,5 +24,9 @@ IF ((SELECT 1 FROM BlogPosts WHERE [PostTitle] = 'Sample') IS NULL)
 INSERT INTO BlogPosts values ('Sample', '10/10/2010', 'This is some sample text.');
 IF ((SELECT 1 FROM BlogReplies WHERE [ReplyBy] = 'Tester') IS NULL)
 INSERT INTO BlogReplies values ('1', 'Tester', 'This is a sample reply');
+IF ((SELECT 1 FROM BlogReplies WHERE [ReplyBy] = 'Tester2') IS NULL)
+INSERT INTO BlogReplies values ('2', 'Tester2', 'I needed another sample reply');
+IF ((SELECT 1 FROM BlogReplies WHERE [ReplyBy] ='Tester3') IS NULL)
+INSERT INTO BlogReplies values ('1', 'Tester3', 'Second reply to First Post');
 IF ((Select 1 from Tags where TagName = 'ExampleTag') is null)
 insert into Tags values ('ExampleTag');

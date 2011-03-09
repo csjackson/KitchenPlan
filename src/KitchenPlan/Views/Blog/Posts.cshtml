@@ -21,23 +21,26 @@
     { 
         
         <tr>
-            <td>@item.BlogPostId</td>
-            <td>@item.PostTitle</td>
+            <td><h2>@item.PostTitle</h2></td>
             <td>@item.PostDate</td>
+        </tr>
+        <tr>
             <td>@item.PostText</td>
             
-            <td>@Html.ActionLink("Click here rewrite a post", "NewPost", "Blog",
-                new { id = (item.BlogPostId)}, new { }) </td>
-                </tr>
-            <tr>
+            <td>@Html.ActionLink("Click here edit a post", "NewPost", "Blog",
+                    new { id = (item.BlogPostId)}, new { }) </td>
+        </tr>
+        <tr>
             @{foreach (var reply in item.BlogReplies)
-                {
-                    <td>@reply.ReplyBy</td>
+              {
+                    <td>Reply by: @reply.ReplyBy</td>
                     <td>@reply.BlogReplyText</td>
-                }
+              }
               } 
-         </tr>
-     }
+       </tr>
+        <tr><td>@Html.ActionLink("Click here to make a new reply", "ReplyView", "Blog",
+                    new { id = (item.BlogPostId) }, new { })</td></tr>
+    }
     </table>
     @Html.ActionLink("Click here write a new post", "NewPost", "Blog")
 

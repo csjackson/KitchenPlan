@@ -41,5 +41,10 @@ namespace KitchenPlan.Controllers
             }
             return RedirectToAction("Posts", "Blog");
         }
+        public ActionResult ReplyView(int? id)
+        {
+            var reply = objSet.Include("BlogReplies").FirstOrDefault(qq => qq.BlogPostId == id.Value);
+            return View(reply);
+        }
     }    
 }
