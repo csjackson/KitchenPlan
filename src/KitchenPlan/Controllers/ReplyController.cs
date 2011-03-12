@@ -21,15 +21,9 @@ namespace KitchenPlan.Controllers
         public ActionResult AddReply(BlogReply reply)
         {
             var entry = objSet.FirstOrDefault(qq => qq.BlogReplyId == reply.BlogReplyId);
-            if (reply == null)
+            if (entry == null)
                 objSet.AddObject(reply);
-            else if (reply.BlogReplyId.Equals(0))
-            {
-                entry.BlogPostId = reply.BlogPostId;
-                entry.ReplyBy = reply.ReplyBy;
-                entry.BlogReplyText = reply.BlogReplyText;
-            }
-            else
+            else 
             {
                 entry.BlogReplyId = reply.BlogReplyId;
                 entry.BlogPostId = reply.BlogPostId;

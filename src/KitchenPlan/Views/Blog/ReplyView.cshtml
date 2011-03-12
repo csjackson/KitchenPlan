@@ -1,24 +1,19 @@
 ﻿@model KitchenPlan.BlogPost
-@{
-    ViewBag.Title = "NewReply";
-}
-
-<h2>Here you can reply to your chosen post</h2>
-<p></p>
-
-<table border ="1">
-<tr><td>@Model.PostTitle</td><td>@Model.PostDate</td></tr>
-<tr><td>@Model.PostText</td></tr>
-<tr>@foreach (var reply in Model.BlogReplies)
+<h1>Here you can reply to your chosen post</h1>
+<div>
+<div class="postHeader">
+<div, class="postTitle">@Model.PostTitle</div>
+<div class="postDate">@Model.PostDate</div>
+</div>
+@Model.PostText
+@foreach (var reply in Model.BlogReplies)
     {
-    <td>@reply.ReplyBy</td>
-    <td>@reply.BlogReplyText</td>
-    <td>@Html.ActionLink("Click here edit a this reply", "AddReply", "Reply",
-                    new { replyId = (reply.BlogReplyId), post = (Model.BlogPostId) }, new { }) </td>
+    @reply.ReplyBy
+    @reply.BlogReplyText
+    @Html.ActionLink("Click here edit a this reply", "AddReply", "Reply",
+                    new { replyId = (reply.BlogReplyId), post = (Model.BlogPostId) }, new { })
     }
-</tr>
-</table>
-
+</div>
 <h3>You can write a new reply here</h3>
 <p>(I've yet to figure out how to pass the ReplyController 2 different variables.</p>
 <p> I need to to have both the BlogReplyId and the corresponding BlogPostID.</p>

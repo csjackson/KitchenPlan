@@ -1,52 +1,30 @@
 ﻿@model List<KitchenPlan.BlogPost>
-@{
-    Layout = null;
- }
-
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>Blog</title>
-</head>
-<body>
 <h1>Blog Posts</h1>
     <div>
           
     
-    <table border = 1>
  
     @foreach (var item in this.Model)
     { 
+        <div class="postHeader">
+        <div class="postTitle">@item.PostTitle</div>
+        <div class="postDate">@item.PostDate</div>
+        </div>
+        <div class="postText">@item.PostText</div>
+        <div>@Html.ActionLink("Click here edit this post", "NewPost", "Blog",
+            new { id = (item.BlogPostId) }, new { }) </div>
         
-        <tr>
-            <td><h2>@item.PostTitle</h2></td>
-            <td>@item.PostDate</td>
-        </tr>
-        <tr>
-            <td>@item.PostText</td>
-            
-            <td>@Html.ActionLink("Click here edit a post", "NewPost", "Blog",
-                    new { id = (item.BlogPostId)}, new { }) </td>
-        </tr>
-        <tr>
-            @{foreach (var reply in item.BlogReplies)
-              {
-                    <td>Reply by: @reply.ReplyBy</td>
-                    <td>@reply.BlogReplyText</td>
-              }
-              } 
-       </tr>
-        <tr><td>@Html.ActionLink("Click here to make a new reply", "ReplyView", "Blog",
-                    new { id = (item.BlogPostId) }, new { })</td></tr>
-    }
-    </table>
-    @Html.ActionLink("Click here write a new post", "NewPost", "Blog")
+        foreach (var reply in item.BlogReplies)
+        {
+        <blockquote><span>@reply.ReplyBy</span><span> replied:</span>
+        <span>"@reply.BlogReplyText"</span></blockquote>
+        }
+               
+        <div>@Html.ActionLink("Click here to make a new reply", "ReplyView", "Blog",
+                    new { id = (item.BlogPostId) }, new { })</div><br />
+      }  
+    <div>@Html.ActionLink("Click here write a new post", "NewPost", "Blog")</div>
 
    
    
     </div>
-    <p</p>
-</body>
-</html>

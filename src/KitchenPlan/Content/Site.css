@@ -2,10 +2,39 @@ body
 {
     font-size: 75%;
     font-family: Verdana, Tahoma, Arial, "Helvetica Neue", Helvetica, Sans-Serif;
-    color: #232323;
-    background-color: #fff;
+    color: #550011;
+    background-color: #99ddaa;
 }
 
+/* Styles for blog
+-----------------------------------------------------------*/
+.h1
+{
+	color:#550011;
+}
+
+.postDate
+{
+	color:#dddddd;
+	font-size:smaller;
+	
+}	
+.postTitle
+{
+	font-size:large;
+	margin-top:50px;
+}
+
+.postHeader
+{
+	margin-bottom:15px;
+}
+
+.postText
+{
+	background-color:#cccccc;
+	color:#232323;
+}
 /* Styles for basic forms
 -----------------------------------------------------------*/
 
