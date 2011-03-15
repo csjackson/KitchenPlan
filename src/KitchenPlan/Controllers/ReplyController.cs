@@ -33,5 +33,20 @@ namespace KitchenPlan.Controllers
 
             return RedirectToAction("Posts", "Blog");
         }
+
+        [HttpGet]
+        public ActionResult Waste(int blog)
+        {
+            return View(blog);
+        }
+        [HttpPost]
+        public ActionResult Waste(BlogReply reply)
+        {
+           objSet.AddObject(reply);
+           return RedirectToAction("Posts", "Blog");
+        }
+
+               
+        
     }
 }

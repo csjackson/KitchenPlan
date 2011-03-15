@@ -1,4 +1,6 @@
 ﻿@model KitchenPlan.BlogReply
+<h3>You are replying to:</h3>
+@Model.BlogPost.PostText.ToString();
 <h3>Type your reply</h3>
 @using (Html.BeginForm("AddReply", "Reply"))
 { 

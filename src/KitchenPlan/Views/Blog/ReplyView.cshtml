@@ -10,14 +10,14 @@
     {
     @reply.ReplyBy
     @reply.BlogReplyText
-    @Html.ActionLink("Click here edit a this reply", "AddReply", "Reply",
+    @Html.ActionLink("Click here edit this reply", "AddReply", "Reply",
                     new { replyId = (reply.BlogReplyId), post = (Model.BlogPostId) }, new { })
     }
 </div>
 <h3>You can write a new reply here</h3>
-<p>(I've yet to figure out how to pass the ReplyController 2 different variables.</p>
-<p> I need to to have both the BlogReplyId and the corresponding BlogPostID.</p>
-<p>With an existing reply, that's not an issue. But here...</p>
 @Html.ActionLink("Click here to create a new reply", "AddReply", "Reply",
             new { post = (Model.BlogPostId) }, new { })
 
+<div>
+    @Html.Partial("~/Views/Reply/Waste.cshtml", Model.BlogPostId)
+</div>

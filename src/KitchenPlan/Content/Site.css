@@ -8,21 +8,44 @@ body
 
 /* Styles for blog
 -----------------------------------------------------------*/
+.content
+{
+	width:720px;
+	margin:0 auto;
+}
 .h1
 {
 	color:#550011;
 }
+.post
+{
+	position:relative;
+	clear:both;
+	border-bottom:1px solid #588062;
+}
+
+.postGroup1
+{
+	float:left;
+	width:340px;
+	margin:10px;
+}
+.postGroup2
+{
+	width:340px;
+	margin:10px;
+	float:right;
+}
 
 .postDate
 {
-	color:#dddddd;
+	color:#588062;
 	font-size:smaller;
 	
 }	
 .postTitle
 {
 	font-size:large;
-	margin-top:50px;
 }
 
 .postHeader
@@ -34,6 +57,12 @@ body
 {
 	background-color:#cccccc;
 	color:#232323;
+	padding-bottom:25px;
+}
+
+.newPost
+{
+	clear:both;
 }
 /* Styles for basic forms
 -----------------------------------------------------------*/

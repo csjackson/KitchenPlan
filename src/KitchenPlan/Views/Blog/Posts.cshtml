@@ -1,30 +1,34 @@
 ﻿@model List<KitchenPlan.BlogPost>
-<h1>Blog Posts</h1>
-    <div>
-          
-    
- 
+<script>
+    $(document).ready(function () {
+        $(".postGroup2").hide(),
+        $(".postText").click(function () { $(".postGroup2").slideToggle(); });
+    });
+</script>
+<h1>
+    Blog Posts</h1>
+<div>
     @foreach (var item in this.Model)
     { 
-        <div class="postHeader">
-        <div class="postTitle">@item.PostTitle</div>
-        <div class="postDate">@item.PostDate</div>
+        <div class="post">
+            <div class="postGroup1">
+                <div class="postHeader">
+                    <div class="postTitle">@item.PostTitle</div>
+                    <div class="postDate">@item.PostDate</div>
+                </div>
+                <div class="postText">@item.PostText</div>
+            </div>
+            <div class="postGroup2">
+                <div>@Html.ActionLink("Click here edit this post", "NewPost", "Blog",
+            new { id = (item.BlogPostId) }, new { })
+                </div>
+                There have been @item.BlogReplies.Count replies to this post.
+                
+                <div>@Html.ActionLink("Click here to make a new reply", "ReplyView", "Blog",
+                    new { id = (item.BlogPostId) }, new { })</div>
+                <br />
+            </div>
         </div>
-        <div class="postText">@item.PostText</div>
-        <div>@Html.ActionLink("Click here edit this post", "NewPost", "Blog",
-            new { id = (item.BlogPostId) }, new { }) </div>
-        
-        foreach (var reply in item.BlogReplies)
-        {
-        <blockquote><span>@reply.ReplyBy</span><span> replied:</span>
-        <span>"@reply.BlogReplyText"</span></blockquote>
-        }
-               
-        <div>@Html.ActionLink("Click here to make a new reply", "ReplyView", "Blog",
-                    new { id = (item.BlogPostId) }, new { })</div><br />
-      }  
-    <div>@Html.ActionLink("Click here write a new post", "NewPost", "Blog")</div>
-
-   
-   
-    </div>
+    }
+    <div class="newPost">@Html.ActionLink("Click here write a new post", "NewPost", "Blog")</div>
+</div>

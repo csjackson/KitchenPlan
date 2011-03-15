@@ -1,0 +1,14 @@
+﻿@model int
+
+<h2>Waste</h2>
+
+<div>The Blog ID is: @Model</div>
+
+
+@using (Html.BeginForm("Waste", "Reply"))
+{ 
+    <input name="BlogPostId" value="@Model" type="hidden" />
+    <input name="ReplyBy" type="text" />
+    <input name="BlogReplyText" type="text" />
+    <input name="Add" type="submit" />
+}
